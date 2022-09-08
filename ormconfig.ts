@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-import {PostgresConnectionOptions} from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
-const config: PostgresConnectionOptions = {
+export const config: DataSourceOptions = {
   name: "default",
   type: "postgres",
   host: process.env.POSTGRES_HOST,
@@ -11,10 +11,11 @@ const config: PostgresConnectionOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
   entities: ["dist/**/*.entity{ .ts,.js}"],
-  synchronize: process.env.SYNCHRONIZE === 'true',
-  migrations: ["dist/migrations/*{.ts,.js}"],
+  synchronize: false,
+  migrations: ["src/migrations/*{.ts,.js}"],
   migrationsTableName: "migrations_typeorm",
-  migrationsRun: true
-}
+  migrationsRun: true,
+};
 
-export default config;
+const dataSource = new DataSource(config);
+export default dataSource;
