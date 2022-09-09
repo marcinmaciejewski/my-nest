@@ -12,7 +12,7 @@ export const config: DataSourceOptions = {
   database: process.env.POSTGRES_DATABASE,
   entities: ["dist/**/*.entity{ .ts,.js}"],
   synchronize: false,
-  migrations: ["src/migrations/*{.ts,.js}"],
+  migrations: ["dist/migrations/*{.ts,.js}"],
   migrationsTableName: "migrations_typeorm",
   migrationsRun: true,
 };
