@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { User } from './user.entity';
 import { UserService } from './user.service';
 
 @Controller('/users')
@@ -6,7 +7,8 @@ export class UsersController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getHello(): string {
-    return this.userService.getUserHello();
+  async getUsers(): Promise<User[]> {
+    const users = await this.userService.getUsers();
+    return users;
   }
 }
