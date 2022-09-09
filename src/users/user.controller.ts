@@ -8,7 +8,12 @@ export class UsersController {
 
   @Get()
   async getUsers(): Promise<User[]> {
-    const users = await this.userService.getUsers();
+    let users;
+    try {
+      users = await this.userService.getUsers();
+    } catch (error) {
+      console.error(`Can not get users: ${error.message}`);
+    }
     return users;
   }
 
