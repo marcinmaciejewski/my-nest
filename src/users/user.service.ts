@@ -10,12 +10,13 @@ export class UserService {
         private userRepository: UserRepository,
     ) {}
 
-    getUserHello(): string {
-        return 'Hello User World!';
-    }
-
     async getUsers(): Promise<User[]> {
         const users: User[] = await this.userRepository.find();
         return users;
+    }
+
+    async createUser(data: Record<string, unknown>): Promise<void> {
+        const user = await this.userRepository.create(data);
+        this.userRepository.save(user);
     }
 }
