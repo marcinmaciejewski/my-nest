@@ -3,7 +3,7 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 
 @Controller('/users')
-export class UsersController {
+export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
@@ -20,5 +20,6 @@ export class UsersController {
   @Post()
   async createUser(@Body() data): Promise<void> {
     const user = await this.userService.createUser(data);
+    return user;
   }
 }
