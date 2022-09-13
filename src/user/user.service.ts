@@ -15,8 +15,9 @@ export class UserService {
         return users;
     }
 
-    async createUser(data: Record<string, unknown>): Promise<void> {
+    async createUser(data: Record<string, unknown>): Promise<User> {
         const user = await this.userRepository.create(data);
-        this.userRepository.save(user);
+        const result = await this.userRepository.save(user);
+        return result;
     }
 }
