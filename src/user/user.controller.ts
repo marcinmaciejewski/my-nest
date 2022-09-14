@@ -3,6 +3,7 @@ import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('/users')
 export class UserController {
@@ -28,8 +29,14 @@ export class UserController {
   }
 
   @Delete()
-  async deleteUser(@Body() id: DeleteUserDto): Promise<unknown> {
+  async deleteUser(@Body() id: DeleteUserDto): Promise<User> {
     const user = await this.userService.deleteUser(id);
     return user;
+  }
+
+  @Post('/login')
+  async login(@Body() data: LoginUserDto): Promise<unknown> {
+    const result = await this.userService.loginUser(data);
+    return result;
   }
 }

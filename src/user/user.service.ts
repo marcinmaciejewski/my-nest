@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { DeleteUserDto } from './dto/delete-user.dto';
 import encodePassword from '../utils/encodePassword';
+import { LoginUserDto } from './dto/login-user.dto';
+import comparePassword from 'src/utils/comparePassword';
+import generateJWT from 'src/utils/generateJWT';
 @Injectable()
 export class UserService {
     constructor(
@@ -28,9 +31,20 @@ export class UserService {
         return result;
     }
 
-    async deleteUser(data: DeleteUserDto): Promise<unknown> {
+    async deleteUser(data: DeleteUserDto): Promise<User> {
         const user = await this.userRepository.findOneBy({id: data.id});
         const result = await this.userRepository.remove(user);
         return result;
+    }
+
+    async loginUser(data: LoginUserDto): Promise<unknown> {
+        const user = await this.userRepository.findOneBy({email: data.email});
+        const isMatching = comparePassword(data.password, user.password);
+        if (isMatching) {
+            return {
+                access_token: generateJWT({...user}),
+            }
+        }
+        return 'User email or password is not matching';
     }
 }
