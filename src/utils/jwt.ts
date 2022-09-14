@@ -4,8 +4,7 @@ require('dotenv').config();
 
 const secret = process.env.JWT_SECRET
 export function generateJWT(payload: User): string {
-    const token = sign(payload, secret);
-    return token;
+    return sign(payload, secret);
 }
 
 export function verifyJWT(token: string): User {

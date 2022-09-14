@@ -39,6 +39,7 @@ export class UserService {
 
     async loginUser(data: LoginUserDto): Promise<unknown> {
         const user = await this.userRepository.findOneBy({email: data.email});
+        if (!user) return 'User email or password is not matching';
         const isMatching = await comparePassword(data.password, user.password);
         if (isMatching) {
             return {
