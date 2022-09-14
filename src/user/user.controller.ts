@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Post, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors, ClassSerializerInterceptor, Delete } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { DeleteUserDto } from './dto/delete-user.dto';
 
 @Controller('/users')
 export class UserController {
@@ -23,6 +24,12 @@ export class UserController {
   @Post()
   async createUser(@Body() data: CreateUserDto): Promise<User> {
     const user = await this.userService.createUser(data);
+    return user;
+  }
+
+  @Delete()
+  async deleteUser(@Body() id: DeleteUserDto): Promise<unknown> {
+    const user = await this.userService.deleteUser(id);
     return user;
   }
 }
