@@ -7,7 +7,7 @@ import { DeleteUserDto } from './dto/delete-user.dto';
 import encodePassword from '../utils/encodePassword';
 import { LoginUserDto } from './dto/login-user.dto';
 import comparePassword from 'src/utils/comparePassword';
-import generateJWT from 'src/utils/generateJWT';
+import { generateJWT, verifyJWT } from 'src/utils/jwt';
 @Injectable()
 export class UserService {
     constructor(
