@@ -39,7 +39,7 @@ export class UserService {
 
     async loginUser(data: LoginUserDto): Promise<unknown> {
         const user = await this.userRepository.findOneBy({email: data.email});
-        const isMatching = comparePassword(data.password, user.password);
+        const isMatching = await comparePassword(data.password, user.password);
         if (isMatching) {
             return {
                 access_token: generateJWT({...user}),
